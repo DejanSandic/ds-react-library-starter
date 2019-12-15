@@ -13,7 +13,10 @@
 		"dev": "rollup --config --watch",
 		"lint:fix": "prettier-eslint \"src/*\" \"test/*\" --write"
 	},
-	"pre-commit": [ "test", "lint:fix" ],
+	"pre-commit": [
+		"test",
+		"lint:fix"
+	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/DejanSandic/[library-name].git"
