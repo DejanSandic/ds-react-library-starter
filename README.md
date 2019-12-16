@@ -191,13 +191,15 @@ Set the maximum line length to 120 characters.
 
 ```js
 import typescript from 'rollup-plugin-typescript2';
+import resolve from 'rollup-plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
+import commonjs from 'rollup-plugin-commonjs';
 import license from 'rollup-plugin-license';
 import path from 'path';
 
 export default {
-   input: 'src/index.js',
-   external: [],
+   input: 'src/index.ts',
+   external: [ 'react' ],
    output: [
       {
          file: 'dist/index.cjs.js',
@@ -213,10 +215,15 @@ export default {
          name: 'lib',
          file: 'dist/index.umd.js',
          format: 'umd',
-         sourcemap: 'inline'
+         sourcemap: 'inline',
+         globals: {
+            react: 'React'
+         }
       }
    ],
    plugins: [
+      resolve(),
+      commonjs(),
       typescript({ clean: true }),
       terser({ include: [ /^.+\.umd\.js$/ ] }),
       license({
@@ -235,16 +242,12 @@ export default {
 
 Set index.js in the /src folder as input.
 ```js
-input: 'src/index.js';
+input: 'src/index.ts';
 ```
 
 List of external dependencies.
 ```js
-external: []
-
-
-// Example
-external: ['jquery', 'lodash']
+external: [ 'react' ]
 ```
 
 Specify output files for CJS, ESM and UMD formats.
@@ -269,15 +272,19 @@ name: 'lib';
 
 List of global variables in the  UMD output.
 ```js
-globals: {}
-
-
-// Example
 globals: {
-   jquery: '$',
-   lodash: '_',
-   'react-dom': 'ReactDOM'
+   react: 'React'
 }
+```
+
+Locate modules using the Node resolution algorithm, for using third party modules in node_modules.
+```js
+resolve()
+```
+
+Convert CommonJS modules to ES6, so they can be included in a Rollup bundle.
+```js
+commonjs()
 ```
 
 Configure typescript plugin to work without caching.
