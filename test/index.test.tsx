@@ -5,6 +5,6 @@ import { render } from '@testing-library/react';
 import { HelloWorld } from '../src';
 
 test('should render the component', () => {
-	const { queryByText } = render(<HelloWorld />);
-	expect(queryByText('Hello World')).toBeTruthy();
+   const { queryByText } = render(<HelloWorld />);
+   expect(queryByText('Hello World')).toBeTruthy();
 });
